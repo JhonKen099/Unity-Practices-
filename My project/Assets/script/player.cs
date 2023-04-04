@@ -12,7 +12,7 @@ public class player : MonoBehaviour
     //public Animator animation;
     //obteniendo variables de playerarma
     public playerarma arma;
-    public int daño_vulnerable;
+    public int daÃ±o_vulnerable;
 
     //movimiento
     [SerializeField] private float speed = 4f;
@@ -43,10 +43,10 @@ public class player : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        //obteniendo daño_vulnerable
+        //obteniendo daÃ±o_vulnerable
         playerarma playerarma = GetComponent<playerarma>();
 
-        daño_vulnerable = playerarma.daño_vulnerable;
+        daÃ±o_vulnerable = playerarma.daÃ±o_vulnerable;
 
 
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -58,7 +58,7 @@ public class player : MonoBehaviour
 
         transform.position = jugador_mov_x;
 
-        if (daño_vulnerable == 1)
+        if (daÃ±o_vulnerable == 1)
         {
             speed = 7;
         }else

@@ -14,7 +14,7 @@ public class playervida : MonoBehaviour
     public float barravida = 6f;
 
     //playerarma coneccion
-    public int daño_vulnerable;
+    public int daÃ±o_vulnerable;
 
     public float recarga;
 
@@ -36,7 +36,7 @@ public class playervida : MonoBehaviour
 
         playerarma playerarma = GetComponent<playerarma>();
 
-        daño_vulnerable = playerarma.daño_vulnerable;
+        daÃ±o_vulnerable = playerarma.daÃ±o_vulnerable;
 
         recarga = playerarma.recarga;
 
@@ -51,7 +51,7 @@ public class playervida : MonoBehaviour
             //agregar invulnerable
             invulnerable += Time.deltaTime;
 
-            if (daño_vulnerable == 1)
+            if (daÃ±o_vulnerable == 1)
             {
                 recarga += Time.deltaTime;
 
@@ -74,8 +74,8 @@ public class playervida : MonoBehaviour
     {
         if (collision.gameObject.tag == "enemy" && invulne == false)
         {
-            Debug.Log("muere planta muere!!" + hitsPoints + "de daño");
-            barravida -= hitsPoints + daño_vulnerable;
+            Debug.Log("muere planta muere!!" + hitsPoints + "de daÃ±o");
+            barravida -= hitsPoints + daÃ±o_vulnerable;
 
 
             //bolean invulnerable
