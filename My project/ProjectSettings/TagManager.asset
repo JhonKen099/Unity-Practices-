@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - chest
+  - floor_chest
   layers:
   - Default
   - TransparentFX

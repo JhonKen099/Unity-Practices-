@@ -12,7 +12,7 @@ namespace Cainos.PixelArtTopDown_Basic
 
         private Rigidbody2D rgbody;
 
-        [SerializeField] private bool girarVista;
+        
         
         //variables dash 
         [SerializeField] private float veloDash;
@@ -25,7 +25,10 @@ namespace Cainos.PixelArtTopDown_Basic
 
         [SerializeField] private bool puedeMover;
 
-        [SerializeField] private bool mirarDerecha;
+        //Animaciones Caminar
+        private Animator playerAnimator;
+
+        
 
         private void Start()
         {
@@ -33,16 +36,25 @@ namespace Cainos.PixelArtTopDown_Basic
 
             gravedadIni = rgbody.gravityScale;
 
-             veloDash = 10;
-             tiempoDash = 0f;
+             veloDash = 3;
+             tiempoDash = 0.3f;
+
+             playerAnimator = GetComponent<Animator>();
         }
 
 
         private void Update()
-        {
+        {   
 
+            //Caminar
             direccion = new Vector2(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical")).normalized; 
 
+            //Animacion de Caminar. Gira el sprite
+            playerAnimator.SetFloat("horizontal",direccion.x);
+            playerAnimator.SetFloat("vertical",direccion.y);
+            playerAnimator.SetFloat("Speed",direccion.sqrMagnitude);
+
+            //Correr
             if (Input.GetKey(KeyCode.LeftShift) && puedeMover)
             {
                 velocidad = 5;
@@ -51,39 +63,28 @@ namespace Cainos.PixelArtTopDown_Basic
                 velocidad = 2;
             }
             
+            //Efriamiento Dash
             if (!puedeDash)
             {
                 enfriDash = enfriDash + Time.deltaTime;
-                if (enfriDash >= 2f)
+                if (enfriDash >= 0.6f)
                 {
                     puedeDash = true;
                     enfriDash = 0f;
                 }
             }
-
+            // Llamada funcion para dashear
             if (Input.GetKey(KeyCode.C) && puedeDash == true)
             {
                 StartCoroutine(Dash());
             }
 
-            if (direccion.x > 0 && !mirarDerecha)
-            {
-                girar();
-            }else if (direccion.x < 0 && mirarDerecha)
-            {
-                girar();
-            }
+            
+
 
         }
 
-        private void girar()
-        {
-            mirarDerecha = false; 
-            Vector2 escala = transform.localScale; 
-            escala.x *= -1;
-            transform.localScale = escala;
-        }
-
+        //Funcion Dash
         private IEnumerator Dash()
         {
             puedeMover = false;
@@ -99,6 +100,7 @@ namespace Cainos.PixelArtTopDown_Basic
         }
         private void FixedUpdate() 
         {
+            //Caminar. 
             if (puedeMover)
             {
                 rgbody.MovePosition(rgbody.position + direccion * velocidad * Time.fixedDeltaTime);
