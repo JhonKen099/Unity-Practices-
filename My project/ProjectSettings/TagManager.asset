@@ -6,6 +6,8 @@ TagManager:
   tags:
   - chest
   - floor_chest
+  - door
+  - bloque
   layers:
   - Default
   - TransparentFX

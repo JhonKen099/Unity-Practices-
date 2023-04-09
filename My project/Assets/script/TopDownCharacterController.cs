@@ -10,7 +10,7 @@ namespace Cainos.PixelArtTopDown_Basic
 
         [SerializeField] private Vector2 direccion;
 
-        private Rigidbody2D rgbody;
+        [SerializeField] private Rigidbody2D rgbody;
 
         
         
@@ -26,7 +26,7 @@ namespace Cainos.PixelArtTopDown_Basic
         [SerializeField] private bool puedeMover;
 
         //Animaciones Caminar
-        private Animator playerAnimator;
+        [SerializeField] private Animator playerAnimator;
 
         
 
@@ -49,10 +49,18 @@ namespace Cainos.PixelArtTopDown_Basic
             //Caminar
             direccion = new Vector2(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical")).normalized; 
 
-            //Animacion de Caminar. Gira el sprite
+            //Animacion de Caminar
             playerAnimator.SetFloat("horizontal",direccion.x);
             playerAnimator.SetFloat("vertical",direccion.y);
             playerAnimator.SetFloat("Speed",direccion.sqrMagnitude);
+            //Animacion De "Uy Quieto"
+            if (Input.GetAxisRaw("Horizontal") != 0  
+            || Input.GetAxisRaw("Vertical") != 0  || 
+            Input.GetAxisRaw("Horizontal") != 0 && Input.GetAxisRaw("Vertical") != 0)
+            {
+                playerAnimator.SetFloat("lastHorizontal",direccion.x);
+                playerAnimator.SetFloat("LastVertical",direccion.y);
+            }
 
             //Correr
             if (Input.GetKey(KeyCode.LeftShift) && puedeMover)
@@ -60,7 +68,7 @@ namespace Cainos.PixelArtTopDown_Basic
                 velocidad = 5;
             }else
             {
-                velocidad = 2;
+                velocidad = 3;
             }
             
             //Efriamiento Dash
