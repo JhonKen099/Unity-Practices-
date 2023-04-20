@@ -28,8 +28,6 @@ namespace Cainos.PixelArtTopDown_Basic
         //Animaciones Caminar
         [SerializeField] private Animator playerAnimator;
 
-        
-
         private void Start()
         {
             rgbody = GetComponent<Rigidbody2D>();
@@ -42,6 +40,8 @@ namespace Cainos.PixelArtTopDown_Basic
              playerAnimator = GetComponent<Animator>();
 
              puedeMover = true;
+
+             posix = 1;
         }
 
 
@@ -63,6 +63,10 @@ namespace Cainos.PixelArtTopDown_Basic
             {
                 playerAnimator.SetFloat("lastHorizontal",direccion.x);
                 playerAnimator.SetFloat("LastVertical",direccion.y);
+
+                // direccionamiento del dash
+                posix = Input.GetAxisRaw("Horizontal");
+                posiy = Input.GetAxisRaw("Vertical");
             }
 
             //Correr
@@ -74,7 +78,7 @@ namespace Cainos.PixelArtTopDown_Basic
                 velocidad = 3;
             }
             
-            //Efriamiento Dash
+            //Enfriamiento Dash
             if (!puedeDash)
             {
                 enfriDash = enfriDash + Time.deltaTime;
@@ -84,16 +88,8 @@ namespace Cainos.PixelArtTopDown_Basic
                     enfriDash = 0f;
                 }
             }
-                        
-            if (Input.GetAxisRaw("Horizontal") != 0  
-                || Input.GetAxisRaw("Vertical") != 0  || 
-                Input.GetAxisRaw("Horizontal") != 0 && Input.GetAxisRaw("Vertical") != 0)
-            {
-                posix = Input.GetAxisRaw("Horizontal");
-                posiy = Input.GetAxisRaw("Vertical");
-                
-            }
-
+            
+ 
             // Llamada funcion para dashear
             if (Input.GetKey(KeyCode.C) && puedeDash == true)
                 {   
@@ -123,6 +119,8 @@ namespace Cainos.PixelArtTopDown_Basic
             if (puedeMover)
             {
                 rgbody.MovePosition(rgbody.position + direccion * velocidad * Time.fixedDeltaTime);
+                
+                
             }
 
             
